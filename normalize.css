@@ -1,0 +1,57 @@
+html {
+    height: 100vh;
+    box-sizing: border-box;
+}
+*,
+::after,
+::before {
+    margin: 0;
+    box-sizing: inherit;
+}
+ul {
+    list-style-type: none;
+    margin-block: 0;
+    padding-inline: 0;
+}
+a {
+    text-decoration: none;
+    font-family: "Raleway", sans-serif;
+    font-weight: 600;
+}
+h1 {
+    font-family: "Bagel Fat One", system-ui;
+    font-size: 32px;
+    color: var(--light-active-color);
+    letter-spacing: 1px;
+}
+h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--main-light-color);
+}
+p {
+    color: var(--main-light-color);
+}
+textarea, input {
+    outline: none;
+    caret-color: var(--main-light-color);
+    font-family: "Raleway", sans-serif;
+    font-weight: 500;
+    color: var(--main-light-color);
+    resize: none;
+    overflow-x: hidden;
+    scrollbar-gutter: unset;
+}
+label {
+    font-size: 12px;
+    color: var(--light-backgroud-color);
+}
+
+@media (max-width: 800px) {
+    h3, p, a, input::placeholder, textarea::placeholder {
+        font-size: 14px;
+    }
+    label {
+        font-size: 10px;
+    }
+}
