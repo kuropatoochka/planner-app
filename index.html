@@ -16,7 +16,10 @@
 <body>
 <header class="header container">
     <h1 class="header__logo">Planner</h1>
-    <button class="header__button" type="button"></button>
+    <div class="theme-toggle-container">
+        <button class="theme-toggle-button" type="button"></button>
+        <span class="tooltip-message">Сменить тему оформления</span>
+    </div>
 </header>
 <main class="main container">
     <form class="task-form">
@@ -24,7 +27,7 @@
             <input class="task-form__title-text input" id="taskTitle" type="text" autocomplete="off" placeholder="Введите название">
             <label class="task-form__title-limit" for="taskTitle">символов: 0/25</label>
         </div>
-        <textarea class="task-form__body input" rows="1" placeholder="Введите задачу"></textarea>
+        <textarea class="task-form__body input" rows="1" placeholder="Введите задачу" wrap="hard"></textarea>
         <input class="task-form__button" type="submit" value="Добавить"/>
     </form>
     <section class="main__filter">
@@ -48,7 +51,7 @@
                 <span class="bottom-line line"></span>
             </div>
         </div>
-        <h3 class="counter">Выполнено задач: <span class="counter__body">0</span></h3>
+        <h3 class="counter">Выполнено: <span class="counter__body">0</span></h3>
     </section>
     <section class="main__tasks"></section>
 </main>

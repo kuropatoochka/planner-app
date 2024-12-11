@@ -1,5 +1,6 @@
 export const selector = {
-    themeButton: document.querySelector('.header__button'),
+    themeButton: document.querySelector('.theme-toggle-button'),
+    tooltipMessage: document.querySelector('.tooltip-message'),
     taskFormInput: document.querySelectorAll('.input'),
     filterItems: document.querySelectorAll('.filter__link'),
     filterIcon: document.querySelector('.filter__icon'),

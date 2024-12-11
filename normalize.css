@@ -48,8 +48,11 @@ label {
 }
 
 @media (max-width: 800px) {
-    h3, p, a, input::placeholder, textarea::placeholder {
+    h3, p, a {
         font-size: 14px;
+    }
+    input::placeholder, textarea::placeholder {
+        font-size: 12px;
     }
     label {
         font-size: 10px;

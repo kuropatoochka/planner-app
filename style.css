@@ -5,7 +5,7 @@
     --dark-background-color: #29384D;
     --light-active-color: #437e59;
     --dark-active-color: #a4dcb6;
-    --dark-theme: #1A1A1A;
+    --dark-theme: rgb(26, 26, 26);
     --base-transition: 0.3s;
 }
 body {
@@ -32,7 +32,11 @@ body._dark {
 .header__logo._dark {
     color: var(--dark-active-color);
 }
-.header__button {
+.theme-toggle-container {
+    position: relative;
+    display: inline-block;
+}
+.theme-toggle-button{
     position: relative;
     cursor: pointer;
     width: 36px;
@@ -43,7 +47,7 @@ body._dark {
     transition: background-color var(--base-transition);
     box-shadow: -3px -1px 3px rgba(255, 255, 255, 0.5) inset, 3px 3px 4px rgba(22, 47, 30, 0.6) inset;
 }
-.header__button::after {
+.theme-toggle-button::after {
     content: "";
     position: absolute;
     top: 2px;
@@ -55,12 +59,36 @@ body._dark {
     transition: left var(--base-transition);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15) inset, 1px 0 2px rgba(0, 0, 0, 0.25);
 }
-.header__button._dark {
+.theme-toggle-button._dark {
     background-color: #989A99;
     box-shadow: -3px -1px 3px rgba(255, 255, 255, 0.5) inset, 3px 3px 4px rgba(39, 41, 40, 0.6) inset;
 }
-.header__button._dark::after {
+.theme-toggle-button._dark::after {
     left: 2px;
+}
+.tooltip-message {
+    position: absolute;
+    width: 140px;
+    bottom: -150%;
+    left: 0%;
+    transform: translateX(-50%);
+    background-color: var(--main-light-color);
+    color: var(--main-dark-color);
+    padding: 5px 5px;
+    border-radius: 5px;
+    font-size: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--base-transition) ease, transform var(--base-transition) ease;
+    pointer-events: none;
+}
+.tooltip-message._dark {
+    background-color: var(--dark-background-color);
+}
+.theme-toggle-container:hover .tooltip-message {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-10px);
 }
 .task-form {
     margin: 0 auto 30px;
@@ -149,7 +177,7 @@ body._dark {
     gap: 15px;
 }
 .filter__list {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 15px;
 }
@@ -252,18 +280,19 @@ body._dark {
     display: flex;
     justify-content: space-between;
 }
-.complete__icon._active~svg~path{
-    fill: var(--main-light-color);
+.card__body_text {
+    white-space: pre-wrap;
+}
+.complete__icon._active {
+    color: var(--main-light-color);
 }
 
 @media (max-width: 800px) {
-    .filter__list {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 7px;
+    .container {
+        padding: 10px 6% 10px;
     }
     .task-form {
+        margin-bottom: 20px;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto;
@@ -271,15 +300,40 @@ body._dark {
     }
     .input {
         min-height: 40px;
+        box-shadow: -6px -6px 12px rgba(255, 255, 255, 0.5) inset, 3px 3px 12px rgba(74, 79, 135, 0.3) inset;
+    }
+    .input._dark {
+        box-shadow: -2px -2px 7px rgba(52, 52, 52, 0.5) inset, 3px 3px 12px rgba(0, 0, 0, 0.5) inset;
     }
     .task-form__body {
         grid-column: span 2;
     }
     .task-form__button {
         height: 46px;
-        display: block;
         padding: 8px 12px;
         grid-row: 1;
         grid-column: 2;
+    }
+    .filter__list {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 7px;
+    }
+    .line {
+        top: 8px;
+    }
+    .top-line {
+        left: -1px;
+        transform: rotate(45deg);
+    }
+    .bottom-line {
+        left: 8px;
+        transform: rotate(135deg);
+    }
+    .filter__icon._active .top-line {
+        transform: rotate(-45deg);
+    }
+    .filter__icon._active .bottom-line {
+        transform: rotate(225deg);
     }
 }
