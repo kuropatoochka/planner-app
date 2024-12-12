@@ -1,25 +1,16 @@
 import {selector} from "./constants/constants.js";
-import {toggleDarkTheme} from "./utils/darkTheme.js";
 import {updateTaskTitleLimit} from "./utils/inputUtils.js";
 
 const listOfTasks = loadTasksFromLocalStorage();
 let amountOfTasks = listOfTasks.length;
 
 selector.themeButton.addEventListener("click", () => {
-    toggleDarkTheme(
-        document.body,
-        document.querySelector('.header__logo'),
-        selector.themeButton,
-        selector.tooltipMessage,
-        selector.taskFormInput,
-        selector.taskButton,
-        selector.filterItems,
-        selector.filterIcon,
-        selector.counter,
-        selector.taskFormTitleLimit,
-        selector.tasksWrapper,
-        document.querySelectorAll('.card__label_title, .card__body_text')
-    );
+    const root = document.documentElement;
+    if (root.hasAttribute('data-theme')) {
+        root.removeAttribute('data-theme');
+    } else {
+        root.setAttribute('data-theme', 'dark');
+    }
 });
 
 document.getElementById('taskTitle').addEventListener('input', updateTaskTitleLimit);

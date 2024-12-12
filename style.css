@@ -1,20 +1,30 @@
 :root {
-    --main-light-color: #4A4F87;
-    --main-dark-color: #E5F0FF;
-    --light-backgroud-color: #97BDF4;
-    --dark-background-color: #29384D;
-    --light-active-color: #437e59;
-    --dark-active-color: #a4dcb6;
-    --dark-theme: rgb(26, 26, 26);
+    --primary-color: #4A4F87;
+    --window-color: #fff;
+    --background-color: #E5F0FF;
+    --active-background-color: #437e59;
+    --button-default-color: #97BDF4;
+    --input-placeholder-color: #97BDF4;
+    --label-color: #97BDF4;
+    --filter-color: #97BDF4;
+    --default-box-shadow: -6px -6px 12px rgba(255, 255, 255, 0.5) inset, 3px 3px 12px rgba(74, 79, 135, 0.3) inset;
     --base-transition: 0.3s;
+}
+[data-theme="dark"] {
+    --primary-color: #E5F0FF;
+    --window-color: #1A1A1A;
+    --background-color: #29384D;
+    --active-background-color: #a4dcb6;
+    --button-default-color: #29384D;
+    --input-placeholder-color: #E5F0FF;
+    --label-color: #4A4F87;
+    --filter-color: #4A4F87;
+    --default-box-shadow: -2px -2px 7px rgba(52, 52, 52, 0.5) inset, 3px 3px 12px rgba(0, 0, 0, 0.5) inset;
 }
 body {
     font-family: "Raleway", sans-serif;
-    background-color: white;
+    background-color: var(--window-color);
     transition: background-color var(--base-transition);
-}
-body._dark {
-    background-color: var(--dark-theme);
 }
 .container {
     max-width: 1200px;
@@ -29,9 +39,6 @@ body._dark {
 .header__logo {
     transition: background-color var(--base-transition);
 }
-.header__logo._dark {
-    color: var(--dark-active-color);
-}
 .theme-toggle-container {
     position: relative;
     display: inline-block;
@@ -43,9 +50,9 @@ body._dark {
     height: 20px;
     border-radius: 14px;
     border: none;
-    background-color: var(--light-active-color);
-    transition: background-color var(--base-transition);
+    background-color: var(--active-background-color);
     box-shadow: -3px -1px 3px rgba(255, 255, 255, 0.5) inset, 3px 3px 4px rgba(22, 47, 30, 0.6) inset;
+    transition: background-color var(--base-transition);
 }
 .theme-toggle-button::after {
     content: "";
@@ -56,34 +63,27 @@ body._dark {
     height: 16px;
     border-radius: 50%;
     background-color: white;
-    transition: left var(--base-transition);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15) inset, 1px 0 2px rgba(0, 0, 0, 0.25);
+    transition: left var(--base-transition);
 }
-.theme-toggle-button._dark {
-    background-color: #989A99;
-    box-shadow: -3px -1px 3px rgba(255, 255, 255, 0.5) inset, 3px 3px 4px rgba(39, 41, 40, 0.6) inset;
-}
-.theme-toggle-button._dark::after {
+[data-theme="dark"] .theme-toggle-button::after {
     left: 2px;
 }
 .tooltip-message {
     position: absolute;
     width: 140px;
     bottom: -150%;
-    left: 0%;
-    transform: translateX(-50%);
-    background-color: var(--main-light-color);
-    color: var(--main-dark-color);
+    left: 0;
     padding: 5px 5px;
     border-radius: 5px;
-    font-size: 10px;
+    pointer-events: none;
     opacity: 0;
     visibility: hidden;
+    font-size: 10px;
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    transform: translateX(-50%);
     transition: opacity var(--base-transition) ease, transform var(--base-transition) ease;
-    pointer-events: none;
-}
-.tooltip-message._dark {
-    background-color: var(--dark-background-color);
 }
 .theme-toggle-container:hover .tooltip-message {
     opacity: 1;
@@ -91,32 +91,25 @@ body._dark {
     transform: translateX(-50%) translateY(-10px);
 }
 .task-form {
-    margin: 0 auto 30px;
     max-width: 860px;
     min-height: 50px;
+    margin: 0 auto 30px;
     display: flex;
     align-items: flex-start;
     gap: 20px;
 }
 .input {
     min-height: 50px;
+    padding: 15px 25px;
     border: none;
     border-radius: 20px;
-    padding: 15px 25px;
-    box-shadow: -6px -6px 12px rgba(255, 255, 255, 0.5) inset, 3px 3px 12px rgba(74, 79, 135, 0.3) inset;
+    background-color: var(--window-color);
+    box-shadow: var(--default-box-shadow);
     transition: background-color var(--base-transition);
 }
 .input::placeholder {
     font-family: "Raleway", sans-serif;
-    color: var(--light-backgroud-color);
-}
-.input._dark {
-    color: var(--main-dark-color);
-    background-color: var(--dark-theme);
-    box-shadow: -2px -2px 7px rgba(52, 52, 52, 0.5) inset, 3px 3px 12px rgba(0, 0, 0, 0.5) inset;
-}
-.input._dark::placeholder {
-    color: var(--main-dark-color);
+    color: var(--input-placeholder-color);
 }
 .task-form__title {
     display: flex;
@@ -125,18 +118,14 @@ body._dark {
     gap: 5px;
 }
 .task-form__title-text {
-    flex-grow: 1;
     width: 100%;
+    flex-grow: 1;
 }
 .task-form__title-limit {
     padding-left: 25px;
 }
-.task-form__title-limit._limit,
-.task-form__title-limit._dark{
-    color: var(--main-light-color);
-}
-.task-form__title-limit._dark._limit {
-    color: var(--main-dark-color);
+.task-form__title-limit._limit{
+    color: var(--primary-color);
 }
 .task-form__body {
     flex-grow: 15;
@@ -145,9 +134,9 @@ body._dark {
     width: 0;
 }
 .task-form__button {
-    flex-grow: 1;
     height: 50px;
     padding: 13px 33px;
+    flex-grow: 1;
     cursor: pointer;
     border: none;
     border-radius: 20px;
@@ -155,17 +144,11 @@ body._dark {
     font-weight: 600;
     letter-spacing: 1px;
     color: white;
-    background-color: var(--light-backgroud-color);
+    background-color: var(--button-default-color);
     transition: background-color var(--base-transition);
 }
 .task-form__button:active {
-    background-color: var(--light-active-color);
-}
-.task-form__button._dark {
-    background-color: var(--dark-background-color);
-}
-.task-form__button._dark:active {
-    background-color: var(--dark-active-color);
+    background-color: var(--active-background-color);
 }
 .main__filter {
     margin: 0 0 30px;
@@ -185,17 +168,12 @@ body._dark {
     display: none;
 }
 .filter__link {
-    color: var(--light-backgroud-color);
+    color: var(--filter-color);
     transition: color var(--base-transition);
 }
 .filter__link:hover,
-.filter__link._active,
-.filter__link._dark {
-    color: var(--main-light-color);
-}
-.filter__link._dark:hover,
-.filter__link._active._dark {
-    color: var(--main-dark-color);
+.filter__link._active {
+    color: var(--primary-color);
 }
 .filter__icon {
     position: relative;
@@ -208,7 +186,7 @@ body._dark {
     width: 14px;
     height: 2px;
     border-radius: 2px;
-    background-color: var(--main-light-color);
+    background-color: var(--primary-color);
     transition: transform var(--base-transition);
 }
 .top-line {
@@ -225,56 +203,36 @@ body._dark {
 .filter__icon._active .bottom-line {
     transform: rotate(-45deg);
 }
-.filter__icon._dark .line{
-    background-color: var(--main-dark-color);
-}
 .counter {
     transition: color var(--base-transition);
 }
-.counter._dark {
-    color: var(--main-dark-color);
-}
 .main__tasks {
+    width: 100%;
+    margin: 0 0 30px;
     column-width: 235px;
     column-gap: 20px;
-    margin: 0 0 30px;
-    width: 100%;
-}
-.main__tasks._dark .main__tasks_card {
-    background-color: var(--dark-background-color);
-}
-.main__tasks._dark .card__label_title,
-.main__tasks._dark .card__body_text {
-    color: var(--main-dark-color);
 }
 .main__tasks_card {
     transition: background-color var(--base-transition);
 }
 .main__tasks_card._completed {
-    background-color: var(--light-active-color);
+    background-color: var(--active-background-color);
 }
 .main__tasks_card._completed .card__label_title,
 .main__tasks_card._completed .card__body_text{
     color: white;
 }
-.main__tasks._dark .main__tasks_card._completed {
-    background-color: var(--dark-active-color);
-}
-.main__tasks._dark .main__tasks_card._completed .card__label_title,
-.main__tasks._dark .main__tasks_card._completed .card__body_text{
-    color: var(--main-light-color);
-}
 .main__tasks_card._deleted {
     display: none;
 }
 .card {
-    display: inline-block;
     width: 100%;
     margin-bottom: 20px;
     padding: 20px;
+    display: inline-block;
     border-radius: 20px;
     word-wrap: break-word;
-    background-color: var(--main-dark-color);
+    background-color: var(--background-color);
 }
 .card__label {
     display: flex;
@@ -282,9 +240,6 @@ body._dark {
 }
 .card__body_text {
     white-space: pre-wrap;
-}
-.complete__icon._active {
-    color: var(--main-light-color);
 }
 
 @media (max-width: 800px) {

@@ -9,9 +9,9 @@ html {
     box-sizing: inherit;
 }
 ul {
-    list-style-type: none;
     margin-block: 0;
     padding-inline: 0;
+    list-style-type: none;
 }
 a {
     text-decoration: none;
@@ -21,30 +21,30 @@ a {
 h1 {
     font-family: "Bagel Fat One", system-ui;
     font-size: 32px;
-    color: var(--light-active-color);
+    color: var(--active-background-color);
     letter-spacing: 1px;
 }
 h3 {
     font-size: 16px;
     font-weight: 600;
-    color: var(--main-light-color);
+    color: var(--primary-color);
 }
 p {
-    color: var(--main-light-color);
+    color: var(--primary-color);
 }
 textarea, input {
     outline: none;
-    caret-color: var(--main-light-color);
+    overflow-x: hidden;
+    resize: none;
+    scrollbar-gutter: unset;
     font-family: "Raleway", sans-serif;
     font-weight: 500;
-    color: var(--main-light-color);
-    resize: none;
-    overflow-x: hidden;
-    scrollbar-gutter: unset;
+    color: var(--primary-color);
+    caret-color: var(--primary-color);
 }
 label {
     font-size: 12px;
-    color: var(--light-backgroud-color);
+    color: var(--label-color);
 }
 
 @media (max-width: 800px) {
