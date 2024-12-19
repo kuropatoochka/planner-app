@@ -28,22 +28,23 @@
             <label class="task-form__title-limit" for="taskTitle">символов: 0/25</label>
         </div>
         <textarea class="task-form__body input" rows="1" placeholder="Введите задачу" wrap="hard"></textarea>
-        <input class="task-form__button" type="submit" value="Добавить"/>
+        <input class="task-form__button task-form__button_desktop" type="submit" value="Добавить"/>
+        <input class="task-form__button task-form__button_mobile" type="image" src="img/plus.svg"/>
     </form>
     <section class="main__filter">
         <div class="filter">
             <ul class="filter__list _openList">
                 <li class="filter__item">
-                    <a class="filter__link all-tasks _active" href="">Все</a>
+                    <a class="filter__link all-tasks _active">Все</a>
                 </li>
                 <li class="filter__item">
-                    <a class="filter__link active-tasks" href="">Текущие</a>
+                    <a class="filter__link active-tasks">Текущие</a>
                 </li>
                 <li class="filter__item">
-                    <a class="filter__link completed-tasks" href="">Выполненные</a>
+                    <a class="filter__link completed-tasks">Выполненные</a>
                 </li>
                 <li class="filter__item">
-                    <a class="filter__link deleted-tasks" href="">Архив</a>
+                    <a class="filter__link deleted-tasks">Архив</a>
                 </li>
             </ul>
             <div class="filter__icon">

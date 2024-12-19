@@ -9,3 +9,9 @@ export function updateTaskTitleLimit() {
     selector.taskFormTitleLimit.textContent = `символов: ${this.value.length}/${maxLength}`;
     (this.value.length === maxLength) ? selector.taskFormTitleLimit.classList.add('_limit') : selector.taskFormTitleLimit.classList.remove('_limit');
 }
+
+export function resetInput() {
+    selector.taskTitle.value = '';
+    selector.taskText.value = '';
+    selector.taskText.style.height = 'auto';
+}

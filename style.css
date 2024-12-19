@@ -150,6 +150,9 @@ body {
 .task-form__button:active {
     background-color: var(--active-background-color);
 }
+.task-form__button_mobile {
+    display: none;
+}
 .main__filter {
     margin: 0 0 30px;
     display: flex;
@@ -255,10 +258,6 @@ body {
     }
     .input {
         min-height: 40px;
-        box-shadow: -6px -6px 12px rgba(255, 255, 255, 0.5) inset, 3px 3px 12px rgba(74, 79, 135, 0.3) inset;
-    }
-    .input._dark {
-        box-shadow: -2px -2px 7px rgba(52, 52, 52, 0.5) inset, 3px 3px 12px rgba(0, 0, 0, 0.5) inset;
     }
     .task-form__body {
         grid-column: span 2;
@@ -290,5 +289,17 @@ body {
     }
     .filter__icon._active .bottom-line {
         transform: rotate(225deg);
+    }
+}
+
+@media (max-width: 500px) {
+    .task-form {
+        grid-template-columns: 1fr auto;
+    }
+    .task-form__button_desktop {
+        display: none;
+    }
+    .task-form__button_mobile {
+        display: block;
     }
 }
