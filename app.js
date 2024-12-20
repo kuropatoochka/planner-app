@@ -1,9 +1,8 @@
 import {selector} from "./constants/constants.js";
 import {updateTaskTitleLimit} from "./utils/inputUtils.js";
-import {deserializeTasks, rawTasks, saveTasksToLocalStorage} from "./utils/taskStorageService.js";
+import {listOfTasks, saveTasksToLocalStorage} from "./utils/taskStorageService.js";
 import {TaskService} from "./utils/taskService.js";
 
-const listOfTasks = deserializeTasks(rawTasks);
 let amountOfTasks = listOfTasks.length;
 
 selector.themeButton.addEventListener("click", () => {
