@@ -7,8 +7,7 @@ export function saveTasksToLocalStorage(tasks) {
 }
 
 export function loadTasksFromLocalStorage() {
-    let tasks = window.localStorage.getItem('listOfTasks');
-    tasks = tasks ? JSON.parse(tasks) : [];
+    const tasks = JSON.parse(window.localStorage.getItem('listOfTasks') || '[]');
     return tasks.map(task => {
         return new TaskService(task.taskId, task.taskTitle, task.taskText, task.isCompleted, task.isDeleted);
     });

@@ -2,6 +2,7 @@ import {selector} from "./constants/constants.js";
 import {updateTaskTitleLimit} from "./utils/inputUtils.js";
 import {listOfTasks, saveTasksToLocalStorage} from "./utils/taskStorageService.js";
 import {TaskService} from "./utils/taskService.js";
+import {updateCounter} from "./utils/taskCounter.js";
 
 let amountOfTasks = listOfTasks.length;
 
@@ -117,14 +118,3 @@ selector.filterIcon.addEventListener('click', (e) => {
         item.parentElement.style.display = (!isOpenList && !item.classList.contains('_active')) ? 'none' : 'list-item';
     });
 });
-
-function countCompletedTasks(tasks) {
-    const completedTasks = tasks.filter(task => task.isCompleted && !task.isDeleted).length;
-    const activeTasks = tasks.filter(task => !task.isDeleted).length;
-    return (activeTasks === 0) ? '0' : `${completedTasks}/${activeTasks}`;
-}
-
-function updateCounter() {
-    const counterElement = document.querySelector('.counter__body');
-    counterElement.textContent = countCompletedTasks(listOfTasks);
-}
