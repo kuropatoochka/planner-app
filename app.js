@@ -1,40 +1,41 @@
-import {selector} from "./constants/constants.js";
-import {updateTaskTitleLimit} from "./utils/inputUtils.js";
-import {listOfTasks, saveTasksToLocalStorage} from "./utils/taskStorageService.js";
-import {TaskService} from "./utils/taskService.js";
+import { selector } from "./constants/constants.js";
+import { updateTaskTitleLimit } from "./utils/inputUtils.js";
+import { TaskService } from "./utils/taskService.js";
+import { createObservableSubject } from "./utils/createObserver.js";
 import {updateCounter} from "./utils/taskCounter.js";
+import {loadTasksFromLocalStorage, saveTasksToLocalStorage} from "./utils/taskStorageService.js";
 
-let amountOfTasks = listOfTasks.length;
+const taskSubject = createObservableSubject();
+const listOfTasks = loadTasksFromLocalStorage();
 
-selector.themeButton.addEventListener("click", () => {
-    const root = document.documentElement;
-    if (root.hasAttribute('data-theme')) {
-        root.removeAttribute('data-theme');
-    } else {
-        root.setAttribute('data-theme', 'dark');
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    listOfTasks.forEach(task => task.displayTask());
+    updateCounter(listOfTasks.filter(task => !task.isDeleted).length);
 });
 
-for (let task of listOfTasks) {
-    task.createTaskCard();
-    updateCounter();
-}
+const taskObserver = {
+    update(tasks) {
+        selector.tasksWrapper.innerHTML = '';
+        tasks.forEach(task => {
+            task.displayTask();
+        });
+        updateCounter(tasks.filter(task => !task.isDeleted).length);
+    },
+};
+
+taskSubject.subscribe(taskObserver);
 
 function createTaskFromInput() {
     if (!selector.taskText.value.trim()) return;
-    amountOfTasks++;
-    let task = new TaskService(
-        amountOfTasks,
+    const taskId = listOfTasks.length + 1;
+    const task = new TaskService(
+        taskId,
         selector.taskTitle.value.trim(),
-        selector.taskText.value.trim());
-    task.createTaskCard();
-    addTaskToLocalStorage(task);
-    updateCounter();
-}
-
-function addTaskToLocalStorage(task) {
-    listOfTasks.push(task);
-    saveTasksToLocalStorage(listOfTasks);
+        selector.taskText.value.trim()
+    );
+    taskSubject.addNewTask(task);
+    saveTasksToLocalStorage(taskSubject.getAllTasks());
+    taskSubject.notify();
 }
 
 const onFilterItemClick = (item) => {
@@ -42,29 +43,32 @@ const onFilterItemClick = (item) => {
         filterItem.classList.remove('_active');
     }
     item.classList.add('_active');
-    displayFilteredTasks(item);
-}
+
+    const filter = item.getAttribute('data-filter');
+    taskSubject.filterTasksByCriteria(filter);
+};
 
 const onCompleteItemClick = (completeIcon) => {
-    const task = findTaskById(completeIcon);
+    const taskId = Number(completeIcon.closest('.card').getAttribute('data-task-id'));
     const svgPath = completeIcon.querySelector('path');
-    svgPath.setAttribute('fill', task.isCompleted ? '#97BDF4' : '#4A4F87');
-    task.completeTask();
-    saveTasksToLocalStorage(listOfTasks);
+    (svgPath.getAttribute('fill') === '#97BDF4') ? svgPath.setAttribute('fill', '#4A4F87') : svgPath.setAttribute('fill', '#97BDF4');
+    const task = taskSubject.getAllTasks().find(task => task.taskId === taskId);
+    if (task) {
+        task.completeTask();
+        saveTasksToLocalStorage(taskSubject.getAllTasks());
+    }
     updateCounter();
-}
+};
 
 const onDeleteItemClick = (deleteIcon) => {
-    const task = findTaskById(deleteIcon);
-    task.deleteTask();
-    saveTasksToLocalStorage(listOfTasks);
+    const taskId = Number(deleteIcon.closest('.card').getAttribute('data-task-id'));
+    const task = taskSubject.getAllTasks().find(task => task.taskId === taskId);
+    if (task) {
+        task.deleteTask();
+        saveTasksToLocalStorage(taskSubject.getAllTasks());
+    }
     updateCounter();
-}
-
-const findTaskById = (icon) => {
-    const taskId = icon.closest('.card').getAttribute('data-task-id');
-    return listOfTasks.find(task => task.taskId === Number(taskId));
-}
+};
 
 const eventMap = {
     'task-form__button': createTaskFromInput,
@@ -89,26 +93,10 @@ selector.taskFormBody.addEventListener('input', function () {
 
 document.getElementById('taskTitle').addEventListener('input', updateTaskTitleLimit);
 
-function displayFilteredTasks(selectedFilter) {
-    const filterMap = {
-        'active-tasks': task => !task.isCompleted && !task.isDeleted,
-        'completed-tasks': task => task.isCompleted && !task.isDeleted,
-        'deleted-tasks': task => task.isDeleted,
-        'all-tasks': task => !task.isDeleted,
-    };
-    const selectedFilterClass = Object.keys(filterMap).find(cls =>
-        selectedFilter.classList.contains(cls)
-    );
-    selector.tasksWrapper.innerHTML = '';
-    listOfTasks.forEach(task => {
-        if (filterMap[selectedFilterClass](task)) {
-            task.displayTask();
-            if (selectedFilterClass === 'deleted-tasks') {
-                task.taskCard.classList.remove('_deleted');
-            }
-        }
-    });
-}
+selector.themeButton.addEventListener("click", () => {
+    const root = document.documentElement;
+    (root.hasAttribute('data-theme')) ? root.removeAttribute('data-theme') : root.setAttribute('data-theme', 'dark');
+});
 
 selector.filterIcon.addEventListener('click', (e) => {
     e.preventDefault();

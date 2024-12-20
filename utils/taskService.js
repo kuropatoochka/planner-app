@@ -1,9 +1,9 @@
-import {selector} from "../constants/constants.js";
-import {resetInput} from "./inputUtils.js";
-import {createBasicCard} from "../components/TaskCard/TaskCard.js";
+import { selector } from "../constants/constants.js";
+import { resetInput } from "./inputUtils.js";
+import { createBasicCard } from "../components/TaskCard/TaskCard.js";
 
 export class TaskService {
-    constructor(taskId, taskTitle, taskText, isCompleted= false, isDeleted = false) {
+    constructor(taskId, taskTitle, taskText, isCompleted = false, isDeleted = false) {
         this.taskCard = null;
         this.taskId = taskId;
         this.taskTitle = taskTitle || '';
@@ -12,23 +12,19 @@ export class TaskService {
         this.isDeleted = isDeleted;
     }
 
-     createTaskCard() {
-        this.taskCard = createBasicCard(this);
-        this.displayTask();
-    }
-
     displayTask() {
+        this.taskCard = createBasicCard(this);
         selector.tasksWrapper.prepend(this.taskCard);
-        resetInput()
+        resetInput();
     }
 
     completeTask() {
         this.isCompleted = !this.isCompleted;
-        this.taskCard.classList.toggle('_completed');
+        this.taskCard?.classList.toggle('_completed');
     }
 
     deleteTask() {
         this.isDeleted = !this.isDeleted;
-        this.taskCard.classList.add('_deleted');
+        this.taskCard?.classList.add('_deleted');
     }
 }
