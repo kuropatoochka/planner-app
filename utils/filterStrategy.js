@@ -1,11 +1,11 @@
-export const filterTasksList = (tasks, filter) => {
+export const filterTasks = (tasks, filter) => {
     switch (filter) {
         case 'active-tasks':
-            return tasks.filter(task => !task.isCompleted && !task.isDeleted);
+            return tasks.filter(task => !task.isCompleted);
         case 'completed-tasks':
-            return tasks.filter(task => task.isCompleted && !task.isDeleted);
+            return tasks.filter(task => task.isCompleted);
         case 'all-tasks':
-            return tasks.filter(task => !task.isDeleted);
+            return tasks;
         default:
             return tasks;
     }

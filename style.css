@@ -212,11 +212,17 @@ body {
 .main__tasks {
     width: 100%;
     margin: 0 0 30px;
-    column-width: 235px;
+    column-width: 240px;
     column-gap: 20px;
 }
 .main__tasks_card {
     transition: background-color var(--base-transition);
+}
+.card__label_title {
+    overflow-wrap: anywhere;
+}
+.card__label_icons {
+    min-width: 43px;
 }
 .main__tasks_card._completed {
     background-color: var(--active-background-color);
@@ -224,9 +230,6 @@ body {
 .main__tasks_card._completed .card__label_title,
 .main__tasks_card._completed .card__body_text{
     color: white;
-}
-.main__tasks_card._deleted {
-    display: none;
 }
 .card {
     width: 100%;

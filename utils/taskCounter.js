@@ -1,12 +1,9 @@
-import {listOfTasks} from "./taskStorageService.js";
-
 function countCompletedTasks(tasks) {
-    const completedTasks = tasks.filter(task => task.isCompleted && !task.isDeleted).length;
-    const activeTasks = tasks.filter(task => !task.isDeleted).length;
-    return (activeTasks === 0) ? '0' : `${completedTasks}/${activeTasks}`;
+    const completedTasks = tasks.filter(task => task.isCompleted).length;
+    return (tasks.length === 0) ? '0' : `${completedTasks}/${tasks.length}`;
 }
 
-export function updateCounter() {
+export function updateCounter(tasks) {
     const counterElement = document.querySelector('.counter__body');
-    counterElement.textContent = countCompletedTasks(listOfTasks);
+    counterElement.textContent = countCompletedTasks(tasks);
 }
