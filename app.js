@@ -9,23 +9,24 @@ import {updateCounter} from "./utils/taskCounter.js";
 const listOfTasks = loadTasksFromLocalStorage();
 const tasksObservable = createObservableSubject([]);
 let currentFilter = 'all-tasks';
-let filteredTasks = listOfTasks;
-
-document.addEventListener("DOMContentLoaded", () => {
-    tasksObservable.setState(filteredTasks);
-});
 
 function displayTasks(tasks) {
     selector.tasksWrapper.innerHTML = '';
-    tasks.forEach(function (task) {
+    const filteredTasks = filterTasks(tasks, currentFilter);
+    filteredTasks.forEach(function (task) {
         task.createTask();
         selector.tasksWrapper.prepend(task.taskCard);
     });
     resetInput();
 }
 
+tasksObservable.subscribe(saveTasksToLocalStorage);
 tasksObservable.subscribe(displayTasks);
 tasksObservable.subscribe(() => updateCounter(listOfTasks));
+
+document.addEventListener("DOMContentLoaded", () => {
+    tasksObservable.setState(listOfTasks);
+});
 
 function toggleTheme() {
     const root = document.documentElement;
@@ -39,8 +40,7 @@ function createTaskFromInput() {
         selector.taskText.value.trim()
     );
     listOfTasks.push(task);
-    saveTasksToLocalStorage(listOfTasks);
-    tasksObservable.setState(filteredTasks);
+    tasksObservable.setState(listOfTasks);
 }
 
 function onCompleteItemClick(completeIcon) {
@@ -48,8 +48,7 @@ function onCompleteItemClick(completeIcon) {
     const task = listOfTasks.find(task => task.taskId === taskId);
     if (task) {
         task.completeTask();
-        saveTasksToLocalStorage(listOfTasks);
-        tasksObservable.setState(filteredTasks);
+        tasksObservable.setState(listOfTasks);
     }
 }
 
@@ -58,9 +57,7 @@ function onDeleteItemClick(deleteIcon) {
     const taskIndex = listOfTasks.findIndex(task => task.taskId === taskId);
     if (taskIndex !== -1) {
         listOfTasks.splice(taskIndex, 1);
-        saveTasksToLocalStorage(listOfTasks);
-        filteredTasks = filterTasks(listOfTasks, currentFilter);
-        tasksObservable.setState(filteredTasks);
+        tasksObservable.setState(listOfTasks);
     }
 }
 
@@ -70,8 +67,7 @@ function onFilterItemClick(item) {
     }
     item.classList.add('_active');
     currentFilter = item.getAttribute('data-filter');
-    filteredTasks = filterTasks(listOfTasks, currentFilter);
-    tasksObservable.setState(filteredTasks);
+    tasksObservable.setState(listOfTasks);
 }
 
 const eventMap = {
